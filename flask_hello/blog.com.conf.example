@@ -1,0 +1,30 @@
+# 这是 blog.com.conf 主配置文件的修改示例
+# 在原有配置基础上，需要在 server 块内添加以下行：
+
+server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name *.windsong.top 101.43.128.210 windsong.top;
+    index index.php index.html index.htm default.php default.htm default.html;
+    root /www/wwwroot/hexo;
+    
+    # SSL 和其他配置保持不变...
+    
+    # === 在这里添加以下行来包含 toy 目录下的所有配置 ===
+    include /www/server/panel/vhost/nginx/toy/*.conf;
+    # === 添加结束 ===
+    
+    # 其他原有配置保持不变...
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.svn|\.project|LICENSE|README.md) {
+        return 404;
+    }
+    
+    # 其余配置...
+}
+
+# 添加位置建议：
+# 1. 可以放在 SSL 配置之后
+# 2. 可以放在 PHP 配置之前
+# 3. 可以放在其他 location 块之前
+# 
+# 这样，toy 目录下的所有 .conf 文件都会被自动包含进来 

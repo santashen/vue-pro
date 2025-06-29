@@ -68,8 +68,32 @@ sudo systemctl start flask-hello.service
 sudo systemctl status flask-hello.service
 ```
 
-### nginx 配置
-将 `nginx-hello.conf` 中的配置添加到您的 nginx 主配置文件中，以实现反向代理。
+### nginx 配置（自动化管理）
+
+#### 方案一：自动化部署（推荐）
+项目使用模块化的 nginx 配置管理方案：
+
+1. **toy 目录管理**：配置文件自动部署到 `/www/server/panel/vhost/nginx/toy/` 目录
+2. **主配置包含**：需要在 `blog.com.conf` 中添加一行包含语句
+3. **自动重载**：部署时自动测试和重载 nginx 配置
+
+#### 使用 nginx 管理脚本
+我们提供了 `nginx-toy-manager.sh` 脚本来管理配置：
+
+```bash
+# 上传并运行管理脚本
+sudo ./nginx-toy-manager.sh
+```
+
+选择 "1. 初始化 toy 配置环境" 来自动设置。
+
+#### 手动配置
+如果需要手动配置，请在 `blog.com.conf` 的 server 块中添加：
+```nginx
+include /www/server/panel/vhost/nginx/toy/*.conf;
+```
+
+参考 `blog.com.conf.example` 文件查看具体位置。
 
 ## 项目结构
 
@@ -78,8 +102,13 @@ sudo systemctl status flask-hello.service
 - `requirements.txt` - 项目依赖
 - `start.sh` - 便捷启动脚本
 - `flask-hello.service` - systemd 服务配置文件
-- `nginx-hello.conf` - nginx 代理配置文件
+- `nginx-hello.conf` - nginx 代理配置文件（自动部署到 toy 目录）
+- `blog.com.conf.example` - 主配置文件修改示例
 - `README.md` - 项目说明
+
+## 相关管理文件
+
+- `../nginx-toy-manager.sh` - nginx 配置管理脚本
 
 ## 服务管理命令
 

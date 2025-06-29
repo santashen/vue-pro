@@ -63,6 +63,23 @@ jobs:
             # 检查服务状态
             sudo systemctl status flask-hello.service
             
-            # 更新 nginx 配置（需要手动将 nginx-hello.conf 内容添加到主配置中）
-            echo "请确保 nginx 配置中包含了 /hello/ 路径的代理设置"
-            echo "参考文件：nginx-hello.conf"
+            # 创建 nginx toy 配置目录并复制配置文件
+            sudo mkdir -p /www/server/panel/vhost/nginx/toy
+            sudo cp nginx-hello.conf /www/server/panel/vhost/nginx/toy/
+            
+            # 检查主配置文件是否包含 toy 目录
+            if ! grep -q "include /www/server/panel/vhost/nginx/toy/\*\.conf;" /www/server/panel/vhost/nginx/blog.com.conf; then
+                echo "警告：请在 blog.com.conf 中添加以下行来包含 toy 配置："
+                echo "include /www/server/panel/vhost/nginx/toy/*.conf;"
+            fi
+            
+            # 测试 nginx 配置
+            sudo nginx -t
+            
+            # 重新加载 nginx
+            if [ $? -eq 0 ]; then
+                sudo systemctl reload nginx
+                echo "nginx 配置已更新并重新加载"
+            else
+                echo "nginx 配置测试失败，请检查配置文件"
+            fi
