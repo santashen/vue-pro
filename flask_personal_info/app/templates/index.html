@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}主页 - 个人信息管理系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-house-door me-2"></i>
+        欢迎使用个人信息管理系统
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    系统介绍
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    这是一个基于 Flask + Bootstrap 的个人信息管理系统，提供了完整的数据管理功能。
+                    系统采用现代化的技术栈构建，具有以下特点：
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h6><i class="bi bi-gear me-2"></i>技术栈</h6>
+                        <ul class="list-unstyled">
+                            <li>🐍 <strong>Flask</strong> - Python Web 框架</li>
+                            <li>🗃️ <strong>SQLAlchemy</strong> - ORM 数据库操作</li>
+                            <li>🔄 <strong>Flask-Migrate</strong> - 数据库版本管理</li>
+                            <li>🌐 <strong>Flask-RESTful</strong> - RESTful API</li>
+                            <li>🎨 <strong>Bootstrap 5</strong> - 现代化 UI 框架</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="bi bi-list-check me-2"></i>主要功能</h6>
+                        <ul class="list-unstyled">
+                            <li>✅ 个人信息的增删查改</li>
+                            <li>✅ 响应式卡片展示</li>
+                            <li>✅ RESTful API 接口</li>
+                            <li>✅ 数据库迁移管理</li>
+                            <li>✅ 现代化用户界面</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-rocket me-2"></i>
+                    快速开始
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">点击左侧导航栏的"数据管理"开始使用系统功能。</p>
+                <a href="{{ url_for('main.data') }}" class="btn btn-success w-100">
+                    <i class="bi bi-arrow-right me-2"></i>
+                    进入数据管理
+                </a>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-graph-up me-2"></i>
+                    系统状态
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <span>数据库状态:</span>
+                    <span class="badge bg-success">正常</span>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <span>API 状态:</span>
+                    <span class="badge bg-success">运行中</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-book me-2"></i>
+                    使用说明
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>📝 添加数据</h6>
+                        <p>在数据管理页面点击"添加新信息"按钮，填写表单即可添加新的个人信息。</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>✏️ 编辑数据</h6>
+                        <p>点击数据卡片上的"编辑"按钮，可以修改现有的个人信息。</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>🗑️ 删除数据</h6>
+                        <p>点击数据卡片上的"删除"按钮，确认后即可删除对应的信息。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

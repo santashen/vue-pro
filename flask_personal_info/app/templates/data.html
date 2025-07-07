@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}数据管理 - 个人信息管理系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="bi bi-people me-2"></i>
+        个人信息管理
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPersonModal">
+            <i class="bi bi-plus-circle me-2"></i>
+            添加新信息
+        </button>
+    </div>
+</div>
+
+<!-- 个人信息卡片展示 -->
+<div class="row" id="personCards">
+    {% for person in persons %}
+    <div class="col-lg-4 col-md-6 mb-4" data-person-id="{{ person.id }}">
+        <div class="card h-100">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h6 class="card-title mb-0">
+                    <i class="bi bi-person me-2"></i>
+                    {{ person.name }}
+                </h6>
+                <small class="text-muted">ID: {{ person.id }}</small>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong><i class="bi bi-calendar me-1"></i>年龄:</strong> {{ person.age }} 岁
+                </div>
+                <div class="mb-2">
+                    <strong><i class="bi bi-envelope me-1"></i>邮箱:</strong> 
+                    <small>{{ person.email }}</small>
+                </div>
+                {% if person.phone %}
+                <div class="mb-2">
+                    <strong><i class="bi bi-telephone me-1"></i>电话:</strong> {{ person.phone }}
+                </div>
+                {% endif %}
+                {% if person.occupation %}
+                <div class="mb-2">
+                    <strong><i class="bi bi-briefcase me-1"></i>职业:</strong> {{ person.occupation }}
+                </div>
+                {% endif %}
+                {% if person.address %}
+                <div class="mb-2">
+                    <strong><i class="bi bi-geo-alt me-1"></i>地址:</strong> 
+                    <small>{{ person.address }}</small>
+                </div>
+                {% endif %}
+                {% if person.bio %}
+                <div class="mb-2">
+                    <strong><i class="bi bi-info-circle me-1"></i>简介:</strong> 
+                    <small>{{ person.bio[:50] }}{% if person.bio|length > 50 %}...{% endif %}</small>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="editPerson({{ person.id }})">
+                        <i class="bi bi-pencil me-1"></i>编辑
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deletePerson({{ person.id }}, '{{ person.name }}')">
+                        <i class="bi bi-trash me-1"></i>删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle me-2"></i>
+            暂无个人信息数据，点击"添加新信息"开始添加数据。
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- 添加个人信息模态框 -->
+<div class="modal fade" id="addPersonModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    添加个人信息
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addPersonForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addName" class="form-label">姓名 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="addName" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addAge" class="form-label">年龄 <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="addAge" name="age" min="1" max="150" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addEmail" class="form-label">邮箱 <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="addEmail" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addPhone" class="form-label">电话</label>
+                                <input type="tel" class="form-control" id="addPhone" name="phone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addOccupation" class="form-label">职业</label>
+                        <input type="text" class="form-control" id="addOccupation" name="occupation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="addAddress" class="form-label">地址</label>
+                        <textarea class="form-control" id="addAddress" name="address" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addBio" class="form-label">个人简介</label>
+                        <textarea class="form-control" id="addBio" name="bio" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check me-2"></i>保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑个人信息模态框 -->
+<div class="modal fade" id="editPersonModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-pencil me-2"></i>
+                    编辑个人信息
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editPersonForm">
+                <input type="hidden" id="editPersonId" name="id">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editName" class="form-label">姓名 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editName" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editAge" class="form-label">年龄 <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="editAge" name="age" min="1" max="150" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">邮箱 <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editPhone" class="form-label">电话</label>
+                                <input type="tel" class="form-control" id="editPhone" name="phone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editOccupation" class="form-label">职业</label>
+                        <input type="text" class="form-control" id="editOccupation" name="occupation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAddress" class="form-label">地址</label>
+                        <textarea class="form-control" id="editAddress" name="address" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBio" class="form-label">个人简介</label>
+                        <textarea class="form-control" id="editBio" name="bio" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check me-2"></i>更新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    // 添加个人信息
+    $('#addPersonForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: $('#addName').val(),
+            age: parseInt($('#addAge').val()),
+            email: $('#addEmail').val(),
+            phone: $('#addPhone').val(),
+            address: $('#addAddress').val(),
+            occupation: $('#addOccupation').val(),
+            bio: $('#addBio').val()
+        };
+        
+        $.ajax({
+            url: '/api/persons',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                if(response.code === 0) {
+                    alert(response.message || '添加成功！');
+                    location.reload();
+                } else {
+                    alert('添加失败：' + (response.message || '未知错误') + (response.data ? ('\n' + JSON.stringify(response.data)) : ''));
+                }
+            },
+            error: function(xhr) {
+                let msg = '添加失败：';
+                if(xhr.responseJSON) {
+                    msg += (xhr.responseJSON.message || '未知错误');
+                    if(xhr.responseJSON.data) msg += '\n' + JSON.stringify(xhr.responseJSON.data);
+                }
+                alert(msg);
+            }
+        });
+    });
+    
+    // 编辑个人信息
+    $('#editPersonForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const personId = $('#editPersonId').val();
+        const formData = {
+            name: $('#editName').val(),
+            age: parseInt($('#editAge').val()),
+            email: $('#editEmail').val(),
+            phone: $('#editPhone').val(),
+            address: $('#editAddress').val(),
+            occupation: $('#editOccupation').val(),
+            bio: $('#editBio').val()
+        };
+        
+        $.ajax({
+            url: '/api/persons/' + personId,
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                if(response.code === 0) {
+                    alert(response.message || '更新成功！');
+                    location.reload();
+                } else {
+                    alert('更新失败：' + (response.message || '未知错误') + (response.data ? ('\n' + JSON.stringify(response.data)) : ''));
+                }
+            },
+            error: function(xhr) {
+                let msg = '更新失败：';
+                if(xhr.responseJSON) {
+                    msg += (xhr.responseJSON.message || '未知错误');
+                    if(xhr.responseJSON.data) msg += '\n' + JSON.stringify(xhr.responseJSON.data);
+                }
+                alert(msg);
+            }
+        });
+    });
+});
+
+// 编辑个人信息
+function editPerson(personId) {
+    $.ajax({
+        url: '/api/persons/' + personId,
+        method: 'GET',
+        success: function(response) {
+            if(response.code === 0 && response.data && response.data.person) {
+                const person = response.data.person;
+                $('#editPersonId').val(person.id);
+                $('#editName').val(person.name);
+                $('#editAge').val(person.age);
+                $('#editEmail').val(person.email);
+                $('#editPhone').val(person.phone || '');
+                $('#editAddress').val(person.address || '');
+                $('#editOccupation').val(person.occupation || '');
+                $('#editBio').val(person.bio || '');
+                $('#editPersonModal').modal('show');
+            } else {
+                alert('获取信息失败：' + (response.message || '未知错误'));
+            }
+        },
+        error: function(xhr) {
+            let msg = '获取信息失败：';
+            if(xhr.responseJSON) {
+                msg += (xhr.responseJSON.message || '未知错误');
+            }
+            alert(msg);
+        }
+    });
+}
+
+// 删除个人信息
+function deletePerson(personId, personName) {
+    if (confirm('确定要删除 "' + personName + '" 的信息吗？')) {
+        $.ajax({
+            url: '/api/persons/' + personId,
+            method: 'DELETE',
+            success: function(response) {
+                if(response.code === 0) {
+                    alert(response.message || '删除成功！');
+                    location.reload();
+                } else {
+                    alert('删除失败：' + (response.message || '未知错误'));
+                }
+            },
+            error: function(xhr) {
+                let msg = '删除失败：';
+                if(xhr.responseJSON) {
+                    msg += (xhr.responseJSON.message || '未知错误');
+                }
+                alert(msg);
+            }
+        });
+    }
+}
+</script>
+{% endblock %} 

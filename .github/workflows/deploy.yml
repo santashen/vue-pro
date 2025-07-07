@@ -39,6 +39,16 @@ jobs:
           target: "/www/wwwroot/hexo/hello/"
           strip_components: 1
 
+      - name: Upload Flask Personal Info project to VPS
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          source: "flask_personal_info/**"
+          target: "/www/wwwroot/hexo/personal/"
+          strip_components: 1
+
       - name: Deploy Flask service
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -46,7 +56,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            # 使用 conda 环境安装 Python 依赖
+            # 部署 Flask Hello 项目
             cd /www/wwwroot/hexo/hello
             /data/miniconda3/envs/light/bin/pip install -r requirements.txt
             
@@ -63,9 +73,31 @@ jobs:
             # 检查服务状态
             sudo systemctl status flask-hello.service
             
+            # 部署 Flask Personal Info 项目
+            cd /www/wwwroot/hexo/personal
+            /data/miniconda3/envs/light/bin/pip install -r requirements.txt
+            
+            # 初始化数据库（如果需要）
+            export FLASK_APP=wsgi.py
+            /data/miniconda3/envs/light/bin/python -c "from app import create_app, db; app = create_app(); app.app_context().push(); db.create_all()"
+            
+            # 复制 systemd 服务文件
+            sudo cp flask-personal.service /etc/systemd/system/
+            
+            # 重新加载 systemd 配置
+            sudo systemctl daemon-reload
+            
+            # 启用并启动服务
+            sudo systemctl enable flask-personal.service
+            sudo systemctl restart flask-personal.service
+            
+            # 检查服务状态
+            sudo systemctl status flask-personal.service
+            
             # 创建 nginx toy 配置目录并复制配置文件
             sudo mkdir -p /www/server/panel/vhost/nginx/toy
-            sudo cp nginx-hello.conf /www/server/panel/vhost/nginx/toy/
+            sudo cp /www/wwwroot/hexo/hello/nginx-hello.conf /www/server/panel/vhost/nginx/toy/
+            sudo cp /www/wwwroot/hexo/personal/nginx-personal.conf /www/server/panel/vhost/nginx/toy/
             
             # 检查主配置文件是否包含 toy 目录
             if ! grep -q "include /www/server/panel/vhost/nginx/toy/\*\.conf;" /www/server/panel/vhost/nginx/blog.com.conf; then
