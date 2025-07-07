@@ -25,8 +25,8 @@
 
 <script setup>
 const projects = [
-  { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/hello/", img: "https://cdn.jsdelivr.net/gh/windsong1024/cdn-assets/hexo-toy/flask.png" },
-  { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/personal/", img: "https://cdn.jsdelivr.net/gh/windsong1024/cdn-assets/hexo-toy/personal.png" }
+  { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/hello/", img: "https://bkimg.cdn.bcebos.com/pic/d1a20cf431adcbef32dc692ea1af2edda3cc9f29" },
+  { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/personal/", img: "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" }
 ]
 </script>
 
