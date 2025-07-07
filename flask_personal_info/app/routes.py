@@ -3,12 +3,12 @@ from app.models import PersonInfo
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/')
+@main_bp.route('/toy/personal')
 def home():
     """主页"""
     return render_template('index.html')
 
-@main_bp.route('/data')
+@main_bp.route('/toy/personal/data')
 def data():
     """数据页面"""
     persons = PersonInfo.query.all()
