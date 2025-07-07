@@ -24,12 +24,11 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* display: flex;     <-- 删除 */
+  /* place-items: center; <-- 删除 */
   min-width: 320px;
   min-height: 100vh;
 }
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -53,16 +52,22 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-.card {
-  padding: 2em;
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 280px);
+  justify-content: start; /* ← 从居中改为左对齐 */
+  gap: 1.5rem;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.card {
+  width: 280px;
+  height: 360px;
+  /* 可选美化 */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: light) {
