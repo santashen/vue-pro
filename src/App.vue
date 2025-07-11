@@ -26,7 +26,8 @@
 <script setup>
 const projects = [
   { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/toy/hello/", img: "https://flask.palletsprojects.com/en/stable/_images/flask-name.svg" },
-  { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/toy/personal/", img: "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" }
+  { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/toy/personal/", img: "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" },
+  { name: "我的旅行地图", desc: "基于 Leaflet.js 的互动旅行足迹地图，记录个人旅行回忆", link: "http://windsong.top/toy/travel/", img: "https://leafletjs.com/docs/images/logo.png" }
 ]
 </script>
 
@@ -78,6 +79,25 @@ body {
   width: 100%;
 }
 
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .card:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.10);
 }
@@ -88,16 +108,38 @@ body {
   background: #eee;
 }
 .card-body {
-  padding: 1rem;
+  padding: 1.5rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+.card-body h3 {
+  margin: 0 0 0.8rem 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.card-body p {
+  color: #7f8c8d;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  flex-grow: 1;
+}
+
 .card a {
   color: #3498db;
   text-decoration: none;
-  margin-top: 0.5rem;
-  font-weight: bold;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.card a:hover {
+  color: #2980b9;
+  text-decoration: underline;
 }
 </style>
