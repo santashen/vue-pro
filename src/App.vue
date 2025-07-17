@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout">
     <aside class="sidebar">
-      <div class="sidebar-title">🧸 小玩具项目</div>
+      <div class="sidebar-title">🌉 小工具之家</div>
       <ul class="sidebar-menu">
         <li class="active">主页</li>
       </ul>
@@ -26,9 +26,18 @@
 <script setup>
 import { onMounted } from 'vue'
 
-// 设置网页标题
+// 设置网页标题和favicon
 onMounted(() => {
   document.title = '小工具之家'
+  
+  // 设置网页favicon
+  const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link')
+  favicon.rel = 'icon'
+  favicon.type = 'image/png'
+  favicon.href = '/stardew.png'
+  if (!document.querySelector('link[rel="icon"]')) {
+    document.head.appendChild(favicon)
+  }
 })
 
 const projects = [

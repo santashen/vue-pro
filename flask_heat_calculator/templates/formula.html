@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>计算公式说明 - 水换热量计算器</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .main-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    .navbar {
+      background: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: blur(10px);
+    }
+    .navbar-brand {
+      font-weight: 600;
+    }
+    .formula-box {
+      background: rgba(102, 126, 234, 0.1);
+      border-left: 4px solid #667eea;
+      border-radius: 8px;
+    }
+    .step-card {
+      background: rgba(118, 75, 162, 0.05);
+      border: 1px solid rgba(118, 75, 162, 0.2);
+      transition: all 0.3s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .math-formula {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1em;
+      color: #2c3e50;
+    }
+    .btn-primary {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border: none;
+      font-weight: 500;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(45deg, #5a6fd8, #6a4190);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .table-responsive {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .table thead th {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-fire me-2"></i>水换热量计算器
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="fas fa-calculator me-1"></i>计算器
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/formula">
+              <i class="fas fa-book me-1"></i>公式说明
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="main-card card rounded-4 shadow">
+          <div class="card-body p-5">
+            <div class="text-center mb-5">
+              <h2 class="text-primary mb-3">
+                <i class="fas fa-book me-2"></i>计算公式说明
+              </h2>
+              <p class="text-muted">了解水换热量计算的原理和公式</p>
+            </div>
+
+            <!-- 核心公式 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-flask me-2"></i>核心公式
+              </h3>
+              <div class="formula-box p-4">
+                <div class="text-center">
+                  <h4 class="math-formula text-primary">Q = m × c × ΔT</h4>
+                  <p class="text-muted mt-2">换热量 = 质量流量 × 比热容 × 温度差</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 参数说明 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-info-circle me-2"></i>参数说明
+              </h3>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>符号</th>
+                      <th>参数名称</th>
+                      <th>单位</th>
+                      <th>说明</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="math-formula">Q</td>
+                      <td>换热量</td>
+                      <td>kJ/h</td>
+                      <td>单位时间内传递的热量</td>
+                    </tr>
+                    <tr>
+                      <td class="math-formula">m</td>
+                      <td>质量流量</td>
+                      <td>kg/h</td>
+                      <td>单位时间内流过的水的质量</td>
+                    </tr>
+                    <tr>
+                      <td class="math-formula">c</td>
+                      <td>比热容</td>
+                      <td>kJ/(kg·°C)</td>
+                      <td>单位质量的水升高1°C所需的热量</td>
+                    </tr>
+                    <tr>
+                      <td class="math-formula">ΔT</td>
+                      <td>温度差</td>
+                      <td>°C</td>
+                      <td>出口温度与入口温度的差值</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 比热容公式 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-thermometer-half me-2"></i>比热容计算
+              </h3>
+              <div class="formula-box p-4">
+                <div class="text-center">
+                  <h5 class="math-formula text-primary">c = 4.214 - 2.286×10⁻³T + 4.991×10⁻⁵T² - 4.519×10⁻⁷T³</h5>
+                  <p class="text-muted mt-2">T 为温度 (°C)，公式考虑了温度对比热容的影响</p>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-muted">
+                  <i class="fas fa-info-circle me-1"></i>
+                  本计算器使用给定温度范围内的平均比热容，通过在温度区间内取10个点计算平均值获得。
+                </p>
+              </div>
+            </div>
+
+            <!-- 计算步骤 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-list-ol me-2"></i>计算步骤
+              </h3>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="step-card card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">
+                        <span class="badge bg-primary me-2">1</span>流量单位转换
+                      </h5>
+                      <p class="card-text">
+                        将输入的流量统一转换为 kg/h：
+                        <ul class="mt-2">
+                          <li>m³/h → kg/h: 乘以 1000</li>
+                          <li>L/min → kg/h: 乘以 60</li>
+                          <li>kg/h → kg/h: 不变</li>
+                        </ul>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="step-card card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">
+                        <span class="badge bg-primary me-2">2</span>计算平均比热容
+                      </h5>
+                      <p class="card-text">
+                        根据入口和出口温度，在温度区间内取10个均匀分布的点，计算各点的比热容，然后取平均值。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="step-card card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">
+                        <span class="badge bg-primary me-2">3</span>计算温度差
+                      </h5>
+                      <p class="card-text">
+                        温度差 = |出口温度 - 入口温度|<br>
+                        使用绝对值确保结果为正数。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="step-card card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">
+                        <span class="badge bg-primary me-2">4</span>计算换热量
+                      </h5>
+                      <p class="card-text">
+                        换热量 = 质量流量 × 平均比热容 × 温度差<br>
+                        同时计算对应的功率单位（kW、W）。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 单位换算 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-exchange-alt me-2"></i>单位换算
+              </h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="formula-box p-3">
+                    <h5 class="text-primary">功率单位</h5>
+                    <ul class="list-unstyled">
+                      <li><strong>kW:</strong> Q (kJ/h) ÷ 3600</li>
+                      <li><strong>W:</strong> Q (kJ/h) × 1000 ÷ 3600</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="formula-box p-3">
+                    <h5 class="text-primary">流量单位</h5>
+                    <ul class="list-unstyled">
+                      <li><strong>m³/h:</strong> kg/h ÷ 1000</li>
+                      <li><strong>L/min:</strong> kg/h ÷ 60</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 使用限制 -->
+            <div class="mb-5">
+              <h3 class="text-primary mb-3">
+                <i class="fas fa-exclamation-triangle me-2"></i>使用限制
+              </h3>
+              <div class="alert alert-warning">
+                <ul class="mb-0">
+                  <li>温度范围：0°C - 100°C</li>
+                  <li>适用于常压下的液态水</li>
+                  <li>不考虑相变过程（如沸腾、冷凝）</li>
+                  <li>假设水的密度为 1000 kg/m³</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 返回按钮 -->
+            <div class="text-center">
+              <a href="/" class="btn btn-primary btn-lg">
+                <i class="fas fa-calculator me-2"></i>返回计算器
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+</body>
+</html> 
