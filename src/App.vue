@@ -24,6 +24,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
+
+// 设置网页标题
+onMounted(() => {
+  document.title = '小工具之家'
+})
+
 const projects = [
   { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/toy/hello/", img: "https://flask.palletsprojects.com/en/stable/_images/flask-name.svg" },
   { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/toy/personal/", img: "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" },
