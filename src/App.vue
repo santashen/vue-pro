@@ -27,7 +27,8 @@
 const projects = [
   { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/toy/hello/", img: "https://flask.palletsprojects.com/en/stable/_images/flask-name.svg" },
   { name: "个人信息管理", desc: "Flask+Bootstrap 个人信息 CRUD 系统", link: "http://windsong.top/toy/personal/", img: "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" },
-  { name: "我的旅行地图", desc: "基于 Leaflet.js 的互动旅行足迹地图，记录个人旅行回忆", link: "http://windsong.top/toy/travel/", img: "https://leafletjs.com/docs/images/logo.png" }
+  { name: "我的旅行地图", desc: "基于 Leaflet.js 的互动旅行足迹地图，记录个人旅行回忆", link: "http://windsong.top/toy/travel/", img: "https://leafletjs.com/docs/images/logo.png" },
+  { name: "水换热计算器", desc: "Flask + NumPy 开发的水加热功率计算器，支持多种流量单位", link: "http://windsong.top/toy/heat/", img: "https://www.thechemicalengineer.com/media/18707/976thumbpic.jpg" }
 ]
 </script>
 

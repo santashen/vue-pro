@@ -59,6 +59,16 @@ jobs:
           target: "/www/wwwroot/hexo/travel/"
           strip_components: 1
 
+      - name: Upload Flask Heat Calculator project to VPS
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          source: "flask_heat_calculator/**"
+          target: "/www/wwwroot/hexo/heat/"
+          strip_components: 1
+
       - name: Deploy Flask service
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -104,6 +114,23 @@ jobs:
             # 检查服务状态
             sudo systemctl status flask-personal.service
             
+            # 部署 Flask Heat Calculator 项目
+            cd /www/wwwroot/hexo/heat
+            /data/miniconda3/envs/light/bin/pip install -r requirements.txt
+            
+            # 复制 systemd 服务文件
+            sudo cp flask-heat.service /etc/systemd/system/
+            
+            # 重新加载 systemd 配置
+            sudo systemctl daemon-reload
+            
+            # 启用并启动服务
+            sudo systemctl enable flask-heat.service
+            sudo systemctl restart flask-heat.service
+            
+            # 检查服务状态
+            sudo systemctl status flask-heat.service
+            
             # 部署 My Travel 静态项目（无需额外配置，只需复制nginx配置）
             echo "My Travel 静态项目已上传到 /www/wwwroot/hexo/travel/"
             
@@ -112,6 +139,7 @@ jobs:
             sudo cp /www/wwwroot/hexo/hello/nginx-hello.conf /www/server/panel/vhost/nginx/toy/
             sudo cp /www/wwwroot/hexo/personal/nginx-personal.conf /www/server/panel/vhost/nginx/toy/
             sudo cp /www/wwwroot/hexo/travel/nginx-travel.conf /www/server/panel/vhost/nginx/toy/
+            sudo cp /www/wwwroot/hexo/heat/nginx-heat.conf /www/server/panel/vhost/nginx/toy/
             
             # 检查主配置文件是否包含 toy 目录
             if ! grep -q "include /www/server/panel/vhost/nginx/toy/\*\.conf;" /www/server/panel/vhost/nginx/blog.com.conf; then
