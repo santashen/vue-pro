@@ -24,21 +24,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-
-// 设置网页标题和favicon
-onMounted(() => {
-  document.title = '小工具之家'
-  
-  // 设置网页favicon
-  const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link')
-  favicon.rel = 'icon'
-  favicon.type = 'image/png'
-  favicon.href = '/stardew.png'
-  if (!document.querySelector('link[rel="icon"]')) {
-    document.head.appendChild(favicon)
-  }
-})
 
 const projects = [
   { name: "Flask Hello", desc: "最小可运行 Flask 页面", link: "http://windsong.top/toy/hello/", img: "https://flask.palletsprojects.com/en/stable/_images/flask-name.svg" },

@@ -12,15 +12,15 @@ def get_specific_heat(t1, t2):
         specific_heats.append(c)
     return np.mean(specific_heats)
 
-@app.route('/')
+@app.route('/toy/heat/')
 def index():
     return render_template('index.html')
 
-@app.route('/formula')
+@app.route('/toy/heat/formula')
 def formula():
     return render_template('formula.html')
 
-@app.route('/calculate', methods=['POST'])
+@app.route('/toy/heat/calculate', methods=['POST'])
 def calculate():
     try:
         data = request.get_json()
