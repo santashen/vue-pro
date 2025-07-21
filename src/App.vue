@@ -5,13 +5,13 @@
       <ul class="sidebar-menu">
         <li 
           :class="{ active: $route.name === 'Home' }" 
-          @click="$router.push('/')"
+          @click="$router.push('/toy')"
         >
           主页
         </li>
         <li 
           :class="{ active: $route.name === 'About' }" 
-          @click="$router.push('/about')"
+          @click="$router.push('/toy/about')"
         >
           关于
         </li>
