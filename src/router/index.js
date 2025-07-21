@@ -4,12 +4,12 @@ import About from '../views/About.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/toy',
     name: 'Home',
     component: Home
   },
   {
-    path: '/about',
+    path: '/toy/about',
     name: 'About',
     component: About
   }
